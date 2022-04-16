@@ -14,7 +14,6 @@ export default function Home() {
   useEffect(() => setMounted(true), [])
   if (!mounted) return null
 
-  console.log({ theme })
   return (
     <>
       <div className={styles.container}>
