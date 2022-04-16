@@ -37,7 +37,7 @@ export default function Home() {
               layout="fill"
               objectFit="cover"
               placeholder="blur"
-              blurDataURL="data:image/webp;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN88/drPQAJGgNf5ggxWwAAAABJRU5ErkJggg=="
+              blurDataURL="data:image/webp;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN88/frfwAJmgPfIAPobgAAAABJRU5ErkJggg=="
               priority
             />
           </div>
