@@ -32,7 +32,7 @@ export const CreateRoom = ({ toggleShow }) => {
               value={values.name}
               onChange={(e) => setFieldValue('name', formatInputText(e.target.value))}
               onBlur={handleBlur}
-              autocomplete="off"
+              autoComplete="off"
             />
             <Input
               placeholder="Optional: Enter a password"
@@ -40,7 +40,7 @@ export const CreateRoom = ({ toggleShow }) => {
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
-              autocomplete="off"
+              autoComplete="off"
             />
             <Button type="submit" disabled={!isValid || !dirty} value="Create" />
             <Button type="button" onClick={toggleShow} value="Join existing game" />

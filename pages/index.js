@@ -1,14 +1,28 @@
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
-import styles from '../styles/Home.module.css'
-import { useState, useEffect } from 'react'
+import io from 'socket.io-client'
 import { CreateRoom, Header, JoinRoom } from '../components'
+import styles from '../styles/Home.module.css'
 
 export default function Home() {
   const [mode, setMode] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [socket, setSocket] = useState(null)
   const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    const newSocket = io('http://localhost:3001')
+    setSocket(newSocket)
+    newSocket.on('connect', () => {
+      console.log('connected')
+    })
+    newSocket.on('send_message', (message) => {
+      console.log('message received', message)
+    })
+    return () => newSocket.close()
+  }, [setSocket])
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), [])
@@ -25,14 +39,18 @@ export default function Home() {
         </Head>
 
         <main className={`${styles.main} ${mode ? styles.mainToggled : ''}`}>
-          <JoinRoom toggleShow={() => setMode(true)} />
+          <JoinRoom
+            toggleShow={() => {
+              setMode(true)
+              console.log('join the room')
+              socket.emit('join_room', { username: 'hello', room: 101 })
+            }}
+          />
           <CreateRoom toggleShow={() => setMode(false)} />
           <div className={`${styles.imageContainer} ${mode ? styles.imageContainerAnimated : ''}`}>
             <Image
               src="/Spinach.webp"
               alt="hero"
-              width="100%"
-              height="100%"
               layout="fill"
               objectFit="cover"
               placeholder="blur"

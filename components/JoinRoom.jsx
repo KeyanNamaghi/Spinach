@@ -40,7 +40,7 @@ export const JoinRoom = ({ toggleShow }) => {
                 value={values.name}
                 onChange={(e) => setFieldValue('name', formatInputText(e.target.value))}
                 onBlur={handleBlur}
-                autocomplete="off"
+                autoComplete="off"
               />
               <Input
                 required
@@ -50,7 +50,7 @@ export const JoinRoom = ({ toggleShow }) => {
                 value={values.code}
                 onChange={(e) => setFieldValue('code', formatInputText(e.target.value))}
                 onBlur={handleBlur}
-                autocomplete="off"
+                autoComplete="off"
               />
               <Button type="submit" disabled={!isValid || !dirty} value="Join" />
               <Button type="button" onClick={toggleShow} value="Create new game" />
