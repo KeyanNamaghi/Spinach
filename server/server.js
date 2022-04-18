@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
     }
 
     callback({ connected: true, error: '', room: roomCode })
-    console.log(`User ${socket.id} created room: ${room}`)
+    console.log(`User ${socket.id} created room: ${roomCode}`)
   })
 
   socket.on('send_message', (data) => {

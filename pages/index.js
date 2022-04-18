@@ -20,9 +20,6 @@ export default function Home() {
     newSocket.on('connect', () => {
       console.log('connected')
     })
-    newSocket.on('send_message', (message) => {
-      console.log('message received', message)
-    })
     return () => newSocket.close()
   }, [setSocket])
 
@@ -44,12 +41,17 @@ export default function Home() {
 
         <main className={`${styles.main} ${mode ? styles.mainToggled : ''}`}>
           <JoinRoom
-            toggleShow={() => {
-              setMode(true)
-              socket.emit('join_room', { username: 'hello', room: 101 }, (callback) => setConnection(callback))
-            }}
+            toggleShow={() => setMode(true)}
+            onSubmit={({ name, room }) =>
+              socket.emit('join_room', { name, room }, (callback) => setConnection(callback))
+            }
           />
-          <CreateRoom toggleShow={() => setMode(false)} />
+          <CreateRoom
+            toggleShow={() => setMode(false)}
+            onSubmit={({ name, password }) =>
+              socket.emit('create_room', { name, password }, (callback) => setConnection(callback))
+            }
+          />
           <div className={`${styles.imageContainer} ${mode ? styles.imageContainerAnimated : ''}`}>
             <Image
               src="/Spinach.webp"

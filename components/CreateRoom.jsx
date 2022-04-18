@@ -2,14 +2,14 @@ import { Formik } from 'formik'
 import { Button, Card, Input } from '.'
 import { formatInputText } from '../utils'
 
-export const CreateRoom = ({ toggleShow }) => {
+export const CreateRoom = ({ toggleShow, onSubmit }) => {
   return (
     <Card>
       <Formik
         initialValues={{ name: '', password: '' }}
-        onSubmit={(values, actions) => {
+        onSubmit={({ name, password }, actions) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
+            onSubmit({ name, password })
             actions.setSubmitting(false)
           }, 200)
         }}

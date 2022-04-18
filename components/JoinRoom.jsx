@@ -3,14 +3,14 @@ import Image from 'next/image'
 import { Button, Card, Input } from '.'
 import { formatInputText } from '../utils'
 
-export const JoinRoom = ({ toggleShow }) => {
+export const JoinRoom = ({ toggleShow, onSubmit }) => {
   return (
     <Card>
       <Formik
         initialValues={{ name: '', code: '' }}
-        onSubmit={(values, actions) => {
+        onSubmit={({ name, code }, actions) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
+            onSubmit({ name, room: code })
             actions.setSubmitting(false)
           }, 200)
         }}
