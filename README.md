@@ -6,13 +6,13 @@ inputs: name, room
 
 if room exists:
 
-- ⬜️ add user to room with name
-- ⬜️ add event to confirm user joined room
+- ✅ add user to room with name
+- ✅ add event to confirm user joined room
 
 else:
 
-- ⬜️ nothing happens
-- ⬜️ add event to show connection failed
+- ✅ nothing happens
+- ✅ add event to show connection failed
 
 ## create_room
 

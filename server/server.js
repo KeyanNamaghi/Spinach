@@ -20,23 +20,26 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log(`User Connected: ${socket.id}`)
 
-  socket.on('join_room', ({ room }) => {
-    socket.join(room)
-    console.log(`User Joined Room: ${room}`)
+  socket.on('join_room', ({ room }, callback) => {
+    // if (!rooms[room]) {
+    //   // Create a new room if it doesn't exist
+    //   rooms[room] = {
+    //     users: []
+    //   }
+    // }
 
     if (!rooms[room]) {
-      // Create a new room if it doesn't exist
-      rooms[room] = {
-        users: []
-      }
-    }
-
-    if (!rooms[room].users.some((el) => el.id === socket.id)) {
+      // message user telling them that the room doesn't exist
+      callback({ connected: false, error: 'Room does not exist' })
+    } else if (!rooms[room]?.users?.some((el) => el.id === socket.id)) {
+      // add user to room if they don't exist in the room
+      socket.join(room)
       rooms[room].users.push({ id: socket.id, ready: false })
+      callback({ connected: true, error: '' })
       console.log(`User ${socket.id} added to room: ${room}`)
     }
 
-    console.log('Users in Room: ', rooms[room].users)
+    console.log('Users in Room: ', rooms[room]?.users)
   })
 
   socket.on('send_message', (data) => {

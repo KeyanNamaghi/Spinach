@@ -10,6 +10,8 @@ export default function Home() {
   const [mode, setMode] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [socket, setSocket] = useState(null)
+  const [connection, setConnection] = useState(null)
+
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
@@ -23,6 +25,8 @@ export default function Home() {
     })
     return () => newSocket.close()
   }, [setSocket])
+
+  useEffect(() => console.log(connection), [connection])
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), [])
@@ -42,8 +46,7 @@ export default function Home() {
           <JoinRoom
             toggleShow={() => {
               setMode(true)
-              console.log('join the room')
-              socket.emit('join_room', { username: 'hello', room: 101 })
+              socket.emit('join_room', { username: 'hello', room: 101 }, (callback) => setConnection(callback))
             }}
           />
           <CreateRoom toggleShow={() => setMode(false)} />
