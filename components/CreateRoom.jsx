@@ -1,17 +1,35 @@
+import { useRouter } from 'next/router'
 import { Formik } from 'formik'
 import { Button, Card, Input } from '.'
 import { formatInputText } from '../utils'
 
-export const CreateRoom = ({ toggleShow, onSubmit }) => {
+export const CreateRoom = ({ toggleShow }) => {
+  const router = useRouter()
+
   return (
     <Card>
       <Formik
         initialValues={{ name: '', password: '' }}
-        onSubmit={({ name, password }, actions) => {
-          setTimeout(() => {
-            onSubmit({ name, password })
-            actions.setSubmitting(false)
-          }, 200)
+        onSubmit={async ({ name, password }, actions) => {
+          try {
+            const request = await fetch(`/api/create`)
+            const response = await request.json()
+
+            if (response?.room) {
+              router.push({
+                pathname: `/room/${response.room}`,
+                query: { name }
+              })
+            }
+          } catch (error) {
+            actions.setErrors({
+              submit: 'Something went wrong 😬'
+            })
+
+            console.log(error)
+          }
+
+          actions.setSubmitting(false)
         }}
         validate={(values) => {
           const errors = {}
@@ -21,7 +39,7 @@ export const CreateRoom = ({ toggleShow, onSubmit }) => {
           return errors
         }}
       >
-        {({ values, isValid, dirty, handleSubmit, handleBlur, handleChange, setFieldValue }) => (
+        {({ values, errors, isValid, isSubmitting, dirty, handleSubmit, handleBlur, handleChange, setFieldValue }) => (
           <form onSubmit={handleSubmit} className="space-y-6">
             <Input
               required
@@ -42,7 +60,8 @@ export const CreateRoom = ({ toggleShow, onSubmit }) => {
               onBlur={handleBlur}
               autoComplete="off"
             />
-            <Button type="submit" disabled={!isValid || !dirty} value="Create" />
+            {errors.submit && <div>{errors.submit}</div>}
+            <Button type="submit" disabled={!isValid || !dirty || isSubmitting} value="Create" />
             <Button type="button" onClick={toggleShow} value="Join existing game" />
           </form>
         )}

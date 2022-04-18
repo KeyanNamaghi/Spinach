@@ -1,18 +1,39 @@
-import { Formik } from 'formik'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { Formik } from 'formik'
 import { Button, Card, Input } from '.'
 import { formatInputText } from '../utils'
 
-export const JoinRoom = ({ toggleShow, onSubmit }) => {
+export const JoinRoom = ({ toggleShow }) => {
+  const router = useRouter()
+
   return (
     <Card>
       <Formik
         initialValues={{ name: '', code: '' }}
-        onSubmit={({ name, code }, actions) => {
-          setTimeout(() => {
-            onSubmit({ name, room: code })
-            actions.setSubmitting(false)
-          }, 200)
+        onSubmit={async ({ name, code: room }, actions) => {
+          try {
+            const request = await fetch(`/api/validate?room=${room}`)
+            const response = await request.json()
+
+            if (response?.valid) {
+              router.push({
+                pathname: `/room/${room}`,
+                query: { name }
+              })
+            } else {
+              actions.setErrors({
+                submit: 'Invalid room code'
+              })
+            }
+          } catch (error) {
+            console.log(error)
+            actions.setErrors({
+              submit: 'Something went wrong 😬'
+            })
+          }
+
+          actions.setSubmitting(false)
         }}
         validate={(values) => {
           const errors = {}
@@ -27,7 +48,7 @@ export const JoinRoom = ({ toggleShow, onSubmit }) => {
           return errors
         }}
       >
-        {({ values, isValid, dirty, handleSubmit, handleBlur, handleChange, setFieldValue }) => (
+        {({ values, errors, isValid, isSubmitting, dirty, handleSubmit, handleBlur, setFieldValue }) => (
           <>
             <Image src="/SpinachIcon.png" alt="brand logo" height={200} width={200} />
             <form onSubmit={handleSubmit} className="space-y-6 mt-6">
@@ -52,7 +73,8 @@ export const JoinRoom = ({ toggleShow, onSubmit }) => {
                 onBlur={handleBlur}
                 autoComplete="off"
               />
-              <Button type="submit" disabled={!isValid || !dirty} value="Join" />
+              {errors.submit && <div>{errors.submit}</div>}
+              <Button type="submit" disabled={!isValid || !dirty || isSubmitting} value="Join" />
               <Button type="button" onClick={toggleShow} value="Create new game" />
             </form>
           </>
