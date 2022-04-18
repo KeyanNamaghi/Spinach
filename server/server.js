@@ -67,6 +67,10 @@ io.on('connection', (socket) => {
   })
 })
 
+app.get('/rooms', function (req, res) {
+  res.send(rooms)
+})
+
 server.listen(3001, () => {
   console.log('SERVER IS RUNNING ON PORT 3001 🏃‍♂️')
 })
