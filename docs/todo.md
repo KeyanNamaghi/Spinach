@@ -13,9 +13,9 @@
 
 ## Server
 
-- ⬜️ REST endpoint to see if valid room
-- ⬜️ REST endpoint to create room
-- ⬜️ Cleaning up on disconnect
+- ✅ REST endpoint to see if valid room
+- ✅ REST endpoint to create room
+- ✅ Cleaning up on disconnect
 - ⬜️ Concept of a Host
 - ⬜️ Admin UI from : <https://www.youtube.com/watch?v=ZKEqqIO7n-k&ab_channel=WebDevSimplified>
 
