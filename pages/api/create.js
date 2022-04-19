@@ -1,6 +1,4 @@
 export default async function handler(req, res) {
-  const { room } = req.query
-
   try {
     const request = await fetch(`http://localhost:3001/create-room`)
     const response = await request.json()

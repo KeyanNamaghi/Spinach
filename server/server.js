@@ -32,7 +32,7 @@ const cleanUpRooms = () => {
       const lastUpdated = new Date(rooms[room]?.lastUpdated)
       const now = new Date()
       const diff = now.getTime() - lastUpdated.getTime()
-      return diff > 60000 //3600000
+      return diff > 3600000
     })
     .forEach((roomToDelete) => {
       // delete rooms that were created more than an hour ago
