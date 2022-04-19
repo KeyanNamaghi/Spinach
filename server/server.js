@@ -60,6 +60,9 @@ io.on('connection', (socket) => {
       rooms[room].users.push({ id: socket.id, name, ready: false })
       callback({ connected: true, error: '' })
       console.log(`User ${socket.id} added to room: ${room}`)
+
+      // broadcast to all users in the room the state of the room
+      io.to(room).emit('room_state', rooms[room])
     }
 
     console.log('Users in Room: ', rooms[room]?.users)
@@ -80,7 +83,13 @@ io.on('connection', (socket) => {
     console.log('DISCONNECTED')
 
     Object.keys(rooms).forEach((room) => {
-      rooms[room].users = rooms[room]?.users.filter((user) => user.id !== socket.id)
+      console.log('On Disconnect: ', rooms[room])
+      if (rooms[room].users.some((el) => el.id === socket.id)) {
+        // remove user from room
+        rooms[room].users = rooms[room]?.users.filter((user) => user.id !== socket.id)
+        console.log(`User ${socket.id} disconnected from room: ${room}`)
+        io.to(room).emit('room_state', rooms[room])
+      }
     })
   })
 })

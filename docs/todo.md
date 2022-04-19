@@ -21,11 +21,11 @@
 
 ## Room Page
 
-- ⬜️ Error handling
-- ⬜️ Basic UI - show who is in the room
-- ⬜️ Move logic from home to here
+- ✅ Move logic from home to here
+- ✅ Basic UI - show who is in the room
 - ⬜️ Ready button
 - ⬜️ Host indicator
+- ⬜️ Error handling
 
 ##  Other
 
