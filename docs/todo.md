@@ -23,7 +23,7 @@
 
 - ✅ Move logic from home to here
 - ✅ Basic UI - show who is in the room
-- ⬜️ Ready button
+- ✅ Ready button
 - ⬜️ Host indicator
 - ⬜️ Error handling
 

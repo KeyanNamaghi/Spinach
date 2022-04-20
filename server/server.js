@@ -79,6 +79,19 @@ io.on('connection', (socket) => {
     console.log(`User ${socket.id} created room: ${roomCode}`)
   })
 
+  socket.on('ready', ({ room, id, ready }) => {
+    if (rooms[room]) {
+      // find user in room and set ready to true
+      const user = rooms[room].users.find((el) => el.id === id)
+      if (user) {
+        user.ready = ready
+      }
+
+      // broadcast to all users in the room the state of the room
+      io.to(room).emit('room_state', rooms[room])
+    }
+  })
+
   socket.on('disconnect', () => {
     console.log('DISCONNECTED')
 
