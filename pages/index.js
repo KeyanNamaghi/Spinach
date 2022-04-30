@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Head from 'next/head'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
 import { CreateRoom, Header, JoinRoom } from '../components'
@@ -16,7 +17,10 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Header theme={theme} toggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
-
+      <Head>
+        <title>Spinach</title>
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+      </Head>
       <main className={`${styles.main} ${mode ? styles.mainToggled : ''}`}>
         <JoinRoom toggleShow={() => setMode(true)} />
         <CreateRoom toggleShow={() => setMode(false)} />
