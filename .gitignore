@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 /server/node_modules
+/server/app
+/server/cdk-eb-infra
+/server/app.zip
 /.pnp
 .pnp.js
 
@@ -29,6 +32,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel

@@ -23,7 +23,8 @@ export default function Room() {
 
   useEffect(() => {
     console.log('SET UP SOCKET STUFF')
-    const newSocket = io('http://localhost:3001')
+    const url = process.env.NEXT_PUBLIC_BACKEND || 'http://localhost:3001'
+    const newSocket = io(url)
     setSocket(newSocket)
 
     newSocket.on('connect', () => {

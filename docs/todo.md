@@ -29,7 +29,7 @@
 
 ##  Other
 
-- ⬜️ Host everything
+- ✅ Host everything
 - ⬜️ Dark theme image / tint?
 - ⬜️ Tidy up header
 - ⬜️ Disable lastpass stuff

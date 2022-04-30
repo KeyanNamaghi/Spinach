@@ -144,6 +144,7 @@ app.get('/create-room', function (req, res) {
   res.send({ room: roomCode })
 })
 
-server.listen(3001, () => {
-  console.log('SERVER IS RUNNING ON PORT 3001 🏃‍♂️')
+const port = process.env.PORT || 3001
+server.listen(port, () => {
+  console.log(`SERVER IS RUNNING ON PORT ${port} 🏃‍♂️`)
 })
