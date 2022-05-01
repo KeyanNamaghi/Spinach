@@ -10,7 +10,6 @@ export const Header = ({ theme, toggleTheme }) => {
       <Head>
         <title>Spinach</title>
         <meta name="description" content="Spinach" />
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className="flex items-center justify-between flex-wrap bg-gray-900 p-4">
