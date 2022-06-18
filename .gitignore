@@ -6,6 +6,7 @@
 /server/app
 /server/cdk-eb-infra
 /server/app.zip
+/server/previous
 /.pnp
 .pnp.js
 
@@ -22,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+server.crt
 .vscode
 
 # debug

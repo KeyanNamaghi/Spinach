@@ -42,7 +42,7 @@ const cleanUpRooms = () => {
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.ORIGIN,
+    origin: '*',
     methods: ['GET', 'POST']
   }
 })
@@ -107,6 +107,12 @@ io.on('connection', (socket) => {
   })
 })
 
+// Healthcheck
+app.get('/', function (req, res) {
+  res.send('Everything looks OK 🌱')
+  console.log('Healthcheck')
+})
+
 app.get('/rooms', function (req, res) {
   cleanUpRooms()
   res.send(rooms)
@@ -147,4 +153,5 @@ app.get('/create-room', function (req, res) {
 const port = process.env.PORT || 3001
 server.listen(port, () => {
   console.log(`SERVER IS RUNNING ON PORT ${port} 🏃‍♂️`)
+  console.log(`Running version - 19-05-2022-v1.0.2`)
 })

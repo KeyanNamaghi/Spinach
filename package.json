@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "formik": "^2.2.9",
+    "http-proxy-middleware": "^2.0.6",
     "next": "12.1.5",
+    "next-http-proxy-middleware": "^1.2.4",
     "next-themes": "^0.1.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",

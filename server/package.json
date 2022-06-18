@@ -1,12 +1,13 @@
 {
   "name": "node-websocket-server",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "server.js",
   "author": "keyan.namaghi <keyan.namaghi@sainsburys.co.uk>",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED='0' node server.js",
+    "dev": "nodemon server.js",
+    "zip": "zip app.zip package.json server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
