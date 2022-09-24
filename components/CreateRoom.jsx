@@ -2,14 +2,16 @@ import { useRouter } from 'next/router'
 import { Formik } from 'formik'
 import { Button, Card, Input } from '.'
 import { formatInputText } from '../utils'
+import { getCookie } from 'cookies-next'
 
 export const CreateRoom = ({ toggleShow }) => {
   const router = useRouter()
+  const nameCookie = getCookie('user_name') ?? ''
 
   return (
     <Card>
       <Formik
-        initialValues={{ name: '', password: '' }}
+        initialValues={{ name: nameCookie, password: '' }}
         onSubmit={async ({ name, password }, actions) => {
           try {
             const request = await fetch(`/api/create`)

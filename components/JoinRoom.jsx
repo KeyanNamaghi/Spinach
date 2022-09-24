@@ -1,16 +1,19 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Formik } from 'formik'
+import { getCookie } from 'cookies-next'
 import { Button, Card, Input } from '.'
 import { formatInputText } from '../utils'
+import { useStateContext } from '../hooks'
 
 export const JoinRoom = ({ toggleShow }) => {
   const router = useRouter()
+  const { name } = useStateContext()
 
   return (
     <Card>
       <Formik
-        initialValues={{ name: '', code: '' }}
+        initialValues={{ name: name.current, code: '' }}
         onSubmit={async ({ name, code: room }, actions) => {
           try {
             const request = await fetch(`/api/validate?room=${room}`)
