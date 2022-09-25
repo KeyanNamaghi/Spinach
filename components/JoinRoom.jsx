@@ -1,17 +1,58 @@
+import { useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { set, ref, onValue, remove, update, get } from 'firebase/database'
 import { Formik } from 'formik'
-import { getCookie } from 'cookies-next'
 import { Button, Card, Input } from '.'
-import { formatInputText } from '../utils'
+import { formatInputText, generateRoomCode } from '../utils'
 import { useStateContext } from '../hooks'
+import { database } from '../firebase'
+
+const fetchRoom = async (code) => {
+  get(ref(database, `/${code}`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val())
+        // TODO: Recycle old rooms
+      } else {
+        console.log('No data available')
+        return
+      }
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+}
 
 export const JoinRoom = ({ toggleShow }) => {
   const router = useRouter()
   const { name } = useStateContext()
 
+  // useEffect(() => {
+  //   onValue(ref(database, '/'), (snapshot) => {
+  //     const data = snapshot.val()
+  //     console.log({ data })
+  //     // if (data !== null) {
+  //     //   setIngredients(data.ingredients)
+  //     //   setSides(data.sides)
+  //     // }
+  //   })
+  // }, [])
+
   return (
     <Card>
+      <button
+        onClick={() => {
+          const roomCode = generateRoomCode()
+          try {
+            fetchRoom(roomCode).then(() => router.push({ pathname: `/room/${roomCode}` }))
+          } catch (error) {
+            // TODO: probably should handle this sometime...
+          }
+        }}
+      >
+        Click me!
+      </button>
       <Formik
         initialValues={{ name: name.current, code: '' }}
         onSubmit={async ({ name, code: room }, actions) => {

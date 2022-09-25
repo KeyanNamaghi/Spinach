@@ -1,12 +1,26 @@
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { Formik } from 'formik'
-import { Button, Card, Input } from '.'
-import { formatInputText } from '../utils'
 import { getCookie } from 'cookies-next'
+import { Formik } from 'formik'
+import { set, ref, onValue, remove, update } from 'firebase/database'
+import { database } from '../firebase'
+import { formatInputText } from '../utils'
+import { Button, Card, Input } from '.'
 
 export const CreateRoom = ({ toggleShow }) => {
   const router = useRouter()
   const nameCookie = getCookie('user_name') ?? ''
+
+  useEffect(() => {
+    onValue(ref(database, '/'), (snapshot) => {
+      const data = snapshot.val()
+      console.log({ data })
+      // if (data !== null) {
+      //   setIngredients(data.ingredients)
+      //   setSides(data.sides)
+      // }
+    })
+  }, [])
 
   return (
     <Card>

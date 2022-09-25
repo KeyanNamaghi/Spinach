@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
+import { set, ref, onValue, remove, update, get } from 'firebase/database'
 import { Button, Card, Header } from '../../components'
+import { database } from '../../firebase'
 
 export default function Room() {
   const { theme, setTheme } = useTheme()
@@ -10,8 +12,27 @@ export default function Room() {
   const router = useRouter()
   const { room, name } = router.query
 
+  // useEffect(() => {
+  //   onValue(ref(database, '/'), (snapshot) => {
+  //     const data = snapshot.val()
+  //     console.log({ data })
+  //     // if (data !== null) {
+  //     //   setIngredients(data.ingredients)
+  //     //   setSides(data.sides)
+  //     // }
+  //   })
+  // }, [])
+
   // When mounted on client, now we can show the UI
-  useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    console.log({ room })
+    if (room) set(ref(database, `/${room}`), { lastUpdated: Date.now() })
+  }, [room])
+
   if (!mounted) return null
 
   return (
